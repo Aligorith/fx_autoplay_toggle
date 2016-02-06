@@ -15,6 +15,7 @@ var button = buttons.ToggleButton({
     "32": "./icon-32.png",
     "64": "./icon-64.png"
   },
+  checked: old_value,
   onChange: function(state) {
   	set_pref(prop_name, state.checked);
   }
