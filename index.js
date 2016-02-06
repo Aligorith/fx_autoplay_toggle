@@ -1,16 +1,10 @@
 var buttons = require('sdk/ui/button/toggle');
 
-var { get, set } = require("sdk/preferences/service");
+var { get: get_pref, set: set_pref } = require("sdk/preferences/service");
 var { when: unload } = require("sdk/system/unload");
 
 var prop_name = "media.autoplay.enabled"
-var old_value = get(prop_name);
-
-
-// By AMO policy global preferences must be changed back to their original value
-unload(function() {
-  set(prop_name, old_value);
-});
+var old_value = get_pref(prop_name);
 
 
 var button = buttons.ToggleButton({
@@ -22,7 +16,13 @@ var button = buttons.ToggleButton({
     "64": "./icon-64.png"
   },
   onChange: function(state) {
-  	set(prop_name, state.checked);
+  	set_pref(prop_name, state.checked);
   }
+});
+
+
+// By AMO policy global preferences must be changed back to their original value
+unload(function() {
+  set_pref(prop_name, old_value);
 });
 
