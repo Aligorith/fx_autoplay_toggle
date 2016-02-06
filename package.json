@@ -1,0 +1,15 @@
+{
+  "title": "Autoplay Toggle",
+  "name": "fxautoplaytoggle",
+  "version": "0.0.1",
+  "description": "A toggle button for quickly turning the autoplay userpref on and off, for dealing with players which break when autplay is disabled.",
+  "main": "index.js",
+  "author": "Joshua Leung (aligorith)",
+  "engines": {
+    "firefox": ">=38.0a1"
+  },
+  "license": "MIT",
+  "keywords": [
+    "jetpack"
+  ]
+}
