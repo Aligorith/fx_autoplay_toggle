@@ -1,11 +1,11 @@
 var { ToggleButton } = require('sdk/ui/button/toggle');
-var windows = require("sdk/windows").browserWindows;
 
 var { get: get_pref, set: set_pref } = require("sdk/preferences/service");
 var { when: unload } = require("sdk/system/unload");
 
 var prop_name = "media.autoplay.enabled"
 var old_value = get_pref(prop_name);
+
 
 /* State: Autoplay Enabled */
 const AutoplayEnabledState = {
@@ -29,6 +29,7 @@ const AutoplayDisabledState = {
   }
 }
 
+
 /* Button Definition - Used for creating each new button instance on new windows */
 var button = ToggleButton({
   id: "toggle-autoplay",
@@ -38,34 +39,27 @@ var button = ToggleButton({
    */
   checked: old_value,
   label:  (old_value) ? AutoplayEnabledState.label : AutoplayDisabledState.label,
-  icon:   (old_value) ? AutoplayEnabledState.icon : AutoplayDisabledState.icon,
+  icon:   (old_value) ? AutoplayEnabledState.icon  : AutoplayDisabledState.icon,
   
   /* Invert the state when clicked - This is global, shared state... */
-  onClick: function(state) {
-  	if (get_pref(prop_name)) {
-  		button.state(button, AutoplayDisabledState);
-  		set_pref(prop_name, false);
-  	}
-  	else {
+  onChange: function(state) {
+  	/* Ensure that we're setting global only
+  	 * (Note: This needs to happen each time, as the click hanlder resets this)
+  	 */
+  	this.state('window', null);
+  	
+  	/* Update state globally */
+  	button.checked = !button.checked;
+  	
+  	set_pref(prop_name, this.checked);
+  	if (button.checked) {
   		button.state(button, AutoplayEnabledState);
-  		set_pref(prop_name, true);
   	}
+    else {
+    	button.state(button, AutoplayDisabledState);
+    }
   }
 });
-
-
-/* Newly created windows will create local button state,
- * so we need to force the button to use the correct global
- * state
- */
-windows.on("open", function(window) {
-	if (get_pref(prop_name)) {
-		button.state(button, AutoplayEnabledState)
-	}
-	else {
-		button.state(button, AutoplayDisabledState)	
-	}
-})
 
 
 /* By AMO policy global preferences must be changed back to their original value */
