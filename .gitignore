@@ -1,5 +1,6 @@
 *~
 *.tmp
+*.xpi
 Thumbs.db
 sign_addon.bat
 
