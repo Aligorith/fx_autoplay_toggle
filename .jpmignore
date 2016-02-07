@@ -1,0 +1,16 @@
+# Ignore Thumbs.db file
+Thumbs.db
+
+# Ignore any zip of xpi files
+*.zip
+*.xpi
+
+# Ignore the source files for the icons
+*.svg
+
+# Ignore logos
+logo.*
+
+# Ignore helper scripts for automating the build process
+*.bat
+
