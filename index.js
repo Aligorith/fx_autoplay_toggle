@@ -35,7 +35,7 @@ var button = ToggleButton({
   id: "toggle-autoplay",
   
   /* Set initial state - This depends on the pre-addon state, and is needed to ensure the first window works.
-   * These values MUSt be set, so we set them from the defaults
+   * These values MUST be set, so we set them from the defaults
    */
   checked: old_value,
   label:  (old_value) ? AutoplayEnabledState.label : AutoplayDisabledState.label,
@@ -44,7 +44,7 @@ var button = ToggleButton({
   /* Invert the state when clicked - This is global, shared state... */
   onChange: function(state) {
   	/* Ensure that we're setting global only
-  	 * (Note: This needs to happen each time, as the click hanlder resets this)
+  	 * (Note: This needs to happen each time, as the click handler resets this)
   	 */
   	this.state('window', null);
   	
